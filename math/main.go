@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 )
 
 func sumOfNumbersDivisibleBy3or5(number uint32) uint64 {
@@ -70,26 +71,153 @@ func printPrime6kNumbersUntil(n uint64) {
 	}
 }
 
+func sumOfDivisors(i uint64) uint64 {
+	var sumOfDivisors uint64 = 1
+	i_sqrt := uint64(math.Sqrt(float64(i)))
+
+	for j := uint64(2); j <= i_sqrt; j++ {
+		if i%j == 0 {
+			if j != i/j {
+				sumOfDivisors += j + i/j
+			} else {
+				sumOfDivisors += j
+			}
+		}
+	}
+	return sumOfDivisors
+}
+
 func calcAbundantNumbersUntil(n uint64) {
 	counter := 1
 	for i := uint64(10); i <= n; i++ {
-		var sumOfDivisors uint64 = 1
-		i_sqrt := uint64(math.Sqrt(float64(i)))
-
-		for j := uint64(2); j <= i_sqrt; j++ {
-			if i%j == 0 {
-				if j != i/j {
-					sumOfDivisors += j + i/j
-				} else {
-					sumOfDivisors += j
-				}
-			}
-		}
+		sumOfDivisors := sumOfDivisors(i)
 		if sumOfDivisors > i {
 			fmt.Println(counter, "Abundant number(", i, ") Abound=", sumOfDivisors-i)
 			counter++
 		}
 	}
+}
+
+type Pair struct {
+	first, second uint64
+}
+
+func makeOrderPair(a, b uint64) Pair {
+	if a > b {
+		return Pair{first: b, second: a}
+	}
+	return Pair{first: a, second: b}
+}
+
+func printAmicableUntil(limit uint64) {
+	set := make(map[Pair]struct{})
+	for i := uint64(4); i < limit; i++ {
+		sum1 := sumOfDivisors(i)
+		if sum1 < limit {
+			sum2 := sumOfDivisors(sum1)
+			if sum2 == i && sum1 != i {
+				set[makeOrderPair(i, sum1)] = struct{}{}
+			}
+		}
+	}
+	fmt.Println("Amount=", len(set))
+	var keys = make([]uint64, 0, len(set))
+	for v := range set {
+		keys = append(keys, v.first)
+		// fmt.Printf("%d and %d are friend numbers\n", v.first, v.second)
+	}
+	sort.Slice(keys, func(i, j int) bool {
+		return keys[i] < keys[j]
+	})
+	for _, v := range keys {
+		fmt.Printf("%d are friend\n", v)
+	}
+}
+
+func checkIfArmstrongNum(n uint64) {
+	temp := n
+	digits := 0
+	for temp > 0 {
+		temp /= 10
+		digits++
+	}
+
+	sum := float64(0)
+	temp = n
+	for i := 0; i < digits; i++ {
+		digit := temp % 10
+		sum += math.Pow(float64(digit), float64(digits))
+		temp /= 10
+	}
+
+	if uint64(sum) == n {
+		fmt.Println(n, "is Armstrong number")
+	}
+}
+
+func printPrimeFactors(n uint64) {
+	vec := []uint64{}
+	for n%2 == 0 {
+		vec = append(vec, 2)
+		n /= 2
+	}
+	for i := uint64(3); i <= uint64(math.Sqrt(float64(n))); i += 2 {
+		for n%i == 0 {
+			vec = append(vec, i)
+			n /= i
+		}
+	}
+
+	if n > 2 {
+		vec = append(vec, n)
+	}
+
+	for _, i := range vec {
+		fmt.Println(i)
+	}
+}
+
+func decToBin(n uint64) []byte {
+	bin := []byte{}
+	for n > 0 {
+		bin = append(bin, byte(n%2))
+		n /= 2
+	}
+	return bin
+}
+
+func gray_encode(n uint64) uint64 {
+	bin := decToBin(n)
+	grayEncoded := uint64(n ^ (n >> 1))
+	binGray := decToBin(grayEncoded)
+	fmt.Print("Value: ")
+	for i := len(bin) - 1; i > 0; i-- {
+		fmt.Print(bin[i])
+	}
+
+	fmt.Println()
+
+	fmt.Print("Gray encoded: ")
+	for i := len(binGray) - 1; i > 0; i-- {
+		fmt.Print(binGray[i])
+	}
+	fmt.Println()
+	return grayEncoded
+}
+
+func gray_decode(n uint64) uint64 {
+	decoded := uint64(0)
+	for i := n; i != 0; i >>= 1 {
+		decoded ^= i
+	}
+	bin := decToBin(decoded)
+
+	fmt.Print("Gray decoded: ")
+	for i := len(bin) - 1; i > 0; i-- {
+		fmt.Print(bin[i])
+	}
+	fmt.Println()
+	return decoded
 }
 
 func main() {
@@ -99,4 +227,10 @@ func main() {
 	// fmt.Println(firstPrimeNumberBefore(7))
 	// printPrime6kNumbersUntil(100)
 	// calcAbundantNumbersUntil(200)
+	// printAmicableUntil(1000000)
+	// for i := uint64(0); i < 1000000; i++ {
+	// 	checkIfArmstrongNum(i)
+	// }
+	// printPrimeFactors(420)
+	gray_decode(gray_encode(4200))
 }
