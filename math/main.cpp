@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <iostream>
 #include <numeric>
+#include <random>
 #include <set>
 #include <vector>
 
@@ -324,6 +325,57 @@ void longestCollatzSequence(uint64_t bound)
     }
 }
 
+double PiMonteCarlo(double samples)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0, 1.0);
+
+    double inside = 0;
+    for (int i = 0; i < samples; i++)
+    {
+        double x = dis(gen);
+        double y = dis(gen);
+        if (std::pow(x, 2) + std::pow(y, 2) <= 1)
+        {
+            inside++;
+        }
+    }
+    return 4.0 * inside / samples;
+}
+
+bool isValidISBN10(std::string_view isbn)
+{
+
+    std::vector<int> digits(0, 10);
+    for (const auto &ch : isbn)
+    {
+        if (ch >= '0' && ch <= '9')
+        {
+            digits.emplace_back(ch - '0');
+        }
+    }
+
+    if (digits.size() > 10)
+    {
+        std::cout << "test";
+        return false;
+    }
+
+    const int checksum = digits[9];
+    int sum{};
+    for (size_t i = 0; i < digits.size() - 1; i++)
+    {
+        sum += (i + 1) * digits[i];
+    }
+    if (sum % 11 == checksum)
+    {
+        std::cout << "Valid ISBN";
+        return true;
+    }
+    return false;
+}
+
 int main()
 {
     // std::cout << sumOfNumbersDivisibleBy3or5(15) << std::endl;
@@ -343,7 +395,8 @@ int main()
     // }
     // grayDecode(gray_encode(4200));
     // convertToRoman(1994);
-    longestCollatzSequence(100);
-
+    // longestCollatzSequence(100);
+    // std::cout << PiMonteCarlo(100000);
+    isValidISBN10("0-306-40615-2");
     return 0;
 }

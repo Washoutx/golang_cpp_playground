@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	mrand "math/rand"
 	"sort"
 )
 
@@ -277,6 +278,43 @@ func longestCollatzSequence(bound uint64) {
 	}
 }
 
+func PiMonteCarlo(samples float64) float64 {
+	inside := float64(0)
+	for i := float64(0); i < samples; i++ {
+		x := mrand.Float64()
+		y := mrand.Float64()
+		if (math.Pow(x, 2) + math.Pow(y, 2)) <= 1 {
+			inside++
+		}
+	}
+	return 4.0 * inside / samples
+}
+
+func isValidISBN10(isbn string) bool {
+	digits := make([]rune, 0, 10)
+	for _, ch := range isbn {
+		if ch >= '0' && ch <= '9' {
+			digits = append(digits, ch)
+		}
+	}
+	fmt.Println(string(digits))
+	if len(digits) < 10 || len(digits) > 10 {
+		return false
+	}
+
+	checksum := digits[9]
+	calc_checksum := 0
+	for i := 0; i < 9; i++ {
+		calc_checksum += (i + 1) * int(digits[i]-'0')
+	}
+
+	if int(checksum-'0') == calc_checksum%11 {
+		fmt.Println("Valid ISBN")
+		return true
+	}
+	return false
+}
+
 func main() {
 	// fmt.Println(sumOfNumbersDivisibleBy3or5(15))
 	// fmt.Println(gcd_greatestCommonDivisor(48, 12))
@@ -291,5 +329,7 @@ func main() {
 	// printPrimeFactors(420)
 	// gray_decode(gray_encode(4200))
 	// convertToRoman(10)
-	longestCollatzSequence(100)
+	// longestCollatzSequence(100)
+	// fmt.Println(PiMonteCarlo(1000000))
+	isValidISBN10("0-306-40615-2")
 }
