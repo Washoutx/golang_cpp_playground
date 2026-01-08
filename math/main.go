@@ -220,6 +220,63 @@ func gray_decode(n uint64) uint64 {
 	return decoded
 }
 
+func convertToRoman(n uint64) {
+	result := []string{}
+	roman := []struct {
+		idx   uint64
+		value string
+	}{
+		{1000, "M"},
+		{900, "CM"},
+		{500, "D"},
+		{400, "CD"},
+		{100, "C"},
+		{90, "XC"},
+		{50, "L"},
+		{40, "XL"},
+		{10, "X"},
+		{9, "IX"},
+		{5, "V"},
+		{4, "IV"},
+		{1, "I"},
+	}
+
+	for _, el := range roman {
+		for n >= el.idx {
+			result = append(result, el.value)
+			n -= el.idx
+		}
+	}
+
+	for _, str := range result {
+		fmt.Print(str)
+	}
+}
+
+func longestCollatzSequence(bound uint64) {
+	global_sequence := []uint64{}
+	for n := uint64(1); n <= bound; n++ {
+		sequence := []uint64{n}
+		i := n
+		for i != 1 {
+			if i%2 == 0 {
+				i /= 2
+			} else {
+				i = 3*i + 1
+			}
+			sequence = append(sequence, i)
+		}
+		if len(sequence) > len(global_sequence) {
+			global_sequence = append([]uint64(nil), sequence...)
+		}
+	}
+
+	fmt.Println("Size =", len(global_sequence))
+	for _, v := range global_sequence {
+		fmt.Print(v, " ")
+	}
+}
+
 func main() {
 	// fmt.Println(sumOfNumbersDivisibleBy3or5(15))
 	// fmt.Println(gcd_greatestCommonDivisor(48, 12))
@@ -232,5 +289,7 @@ func main() {
 	// 	checkIfArmstrongNum(i)
 	// }
 	// printPrimeFactors(420)
-	gray_decode(gray_encode(4200))
+	// gray_decode(gray_encode(4200))
+	// convertToRoman(10)
+	longestCollatzSequence(100)
 }

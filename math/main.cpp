@@ -211,11 +211,117 @@ std::vector<bool> decToBin(uint64_t n)
     }
     while (n > 0)
     {
-        bin.emplace_back(n%2);
+        bin.emplace_back(n % 2);
         n /= 2;
     }
     std::reverse(bin.begin(), bin.end());
     return bin;
+}
+
+uint64_t gray_encode(uint64_t n)
+{
+    std::vector<bool> vec{decToBin(n)};
+    std::cout << "Value:";
+    for (const auto &i : vec)
+    {
+        std::cout << i;
+    }
+    std::cout << std::endl;
+
+    uint64_t grayEncoded = n ^ (n >> 1);
+
+    std::cout << "Gray encoded:";
+    for (const auto &i : decToBin(grayEncoded))
+    {
+        std::cout << i;
+    }
+    std::cout << std::endl;
+
+    return grayEncoded;
+}
+
+uint64_t grayDecode(uint64_t n)
+{
+    uint64_t decoded{};
+    for (int i = n; i != 0; i >>= 1)
+    {
+        decoded ^= i;
+    }
+    std::cout << "Gray decoded:";
+    for (const auto &i : decToBin(decoded))
+    {
+        std::cout << i;
+    }
+    std::cout << std::endl;
+    return decoded;
+}
+
+void convertToRoman(uint64_t n)
+{
+    constexpr std::array<std::pair<uint32_t, std::string_view>, 13> roman{{
+        {1000, "M"},
+        {900, "CM"},
+        {500, "D"},
+        {400, "CD"},
+        {100, "C"},
+        {90, "XC"},
+        {50, "L"},
+        {40, "XL"},
+        {10, "X"},
+        {9, "IX"},
+        {5, "V"},
+        {4, "IV"},
+        {1, "I"},
+    }};
+
+    std::string result{};
+    for (const auto &el : roman)
+    {
+        while (n >= el.first)
+        {
+            result += el.second;
+            n -= el.first;
+        }
+    }
+
+    std::cout << result;
+}
+
+void longestCollatzSequence(uint64_t bound)
+{
+    std::vector<uint64_t> global_sequence;
+    global_sequence.reserve(1000);
+
+    for (uint64_t i = 1; i <= bound; i++)
+    {
+        uint64_t j = i;
+        std::vector<uint64_t> local_sequence;
+        local_sequence.reserve(1000);
+        local_sequence.emplace_back(j);
+
+        while (j != 1)
+        {
+            if (j % 2 == 0)
+            {
+                j /= 2;
+            }
+            else
+            {
+                j = 3 * j + 1;
+            }
+            local_sequence.emplace_back(j);
+        }
+        if (local_sequence.size() > global_sequence.size())
+        {
+            global_sequence = std::move(local_sequence);
+        }
+    }
+
+    std::cout << "Size = " << global_sequence.size() << std::endl;
+    for (const auto &obj : global_sequence)
+    {
+        std::cout << obj << " ";
+    }
 }
 
 int main()
@@ -231,11 +337,13 @@ int main()
     // calcAbundantNumbersUntil(200);
     // printAmicableUntil(1000000);
     // printPrimeFactors(420);
-
-    for (const auto &i : decToBin(504))
-    {
-        std::cout << i;
-    }
+    // for (const auto &i : decToBin(504))
+    // {
+    //     std::cout << i;
+    // }
+    // grayDecode(gray_encode(4200));
+    // convertToRoman(1994);
+    longestCollatzSequence(100);
 
     return 0;
 }
