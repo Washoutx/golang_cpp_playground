@@ -27,9 +27,14 @@ func SetConfInterface(s Sensor, conf string) {
 	s.SetConf(conf)
 }
 
+type EmbeddedInterface interface {
+	Sensor
+	foo()
+}
+
 // composition
 type SensorWithEmbedding struct {
-	Sensor1234 
+	Sensor1234
 	sensorId int
 }
 
@@ -62,7 +67,7 @@ func main() {
 	// Embedding kill the feature that Base class can holds derived class
 	// go doesn't have inheritance as other languages
 
-	// Type with just an embedding polymorphism type can override virtual method 
+	// Type with just an embedding polymorphism type can override virtual method
 	for obj, key := range mp {
 		fmt.Println(key, obj.Read())
 	}
