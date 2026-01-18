@@ -114,4 +114,11 @@ func main() {
 
 	// unused var
 	var _ = int(10)
+
+	// any
+	var _any any = "test"
+	fmt.Println(_any)
+
+	pseudo_tuple := []any{1, 1.1, 'a', "test"}
+	fmt.Println(pseudo_tuple...)
 }
