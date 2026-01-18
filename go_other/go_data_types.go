@@ -106,9 +106,12 @@ func main() {
 	// deleting in slices is impossible, only re-append
 	my_slice := make([]int, 0, 0)
 	my_slice = append(my_slice, 0, 1, 2, 3, 4, 5)
-	fmt.Println(my_slice, "size=", len(my_slice), "cap=", cap(my_slice))	
+	fmt.Println(my_slice, "size=", len(my_slice), "cap=", cap(my_slice))
 	my_slice = append(my_slice[2:3], my_slice[4])
 	fmt.Println(my_slice)
 	my_slice = append(my_slice[2:3], my_slice[1:2]...)
 	fmt.Println(my_slice)
+
+	// unused var
+	var _ = int(10)
 }
