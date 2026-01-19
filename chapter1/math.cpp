@@ -378,25 +378,25 @@ bool isValidISBN10(std::string_view isbn)
 
 int main()
 {
-    // std::cout << sumOfNumbersDivisibleBy3or5(15) << std::endl;
-    // std::cout << gcd_greatestCommonDivisor(48, 12) << std::endl;
-    // std::cout << lcm_leastCommonMultiple(48, 12) << std::endl;
-    // std::array<int, 3> arr {48,5,12};
-    // std::cout << lcm_group(arr.begin(), arr.end() ) << std::endl;
-    // std::cout << firstPrimeNumberBefore(7) << std::endl;
-    // firstPrimeNumberBefore(100);
-    // printPrime6kNumbersUntil(100);
-    // calcAbundantNumbersUntil(200);
-    // printAmicableUntil(1000000);
-    // printPrimeFactors(420);
-    // for (const auto &i : decToBin(504))
-    // {
-    //     std::cout << i;
-    // }
-    // grayDecode(gray_encode(4200));
-    // convertToRoman(1994);
-    // longestCollatzSequence(100);
-    // std::cout << PiMonteCarlo(100000);
-    // isValidISBN10("0-306-40615-2");
+    std::cout << sumOfNumbersDivisibleBy3or5(15) << std::endl;
+    std::cout << gcd_greatestCommonDivisor(48, 12) << std::endl;
+    std::cout << lcm_leastCommonMultiple(48, 12) << std::endl;
+    std::array<int, 3> arr {48,5,12};
+    std::cout << lcm_group(arr.begin(), arr.end() ) << std::endl;
+    std::cout << firstPrimeNumberBefore(7) << std::endl;
+    firstPrimeNumberBefore(100);
+    printPrime6kNumbersUntil(100);
+    calcAbundantNumbersUntil(200);
+    printAmicableUntil(1000000);
+    printPrimeFactors(420);
+    for (const auto &i : decToBin(504))
+    {
+        std::cout << i;
+    }
+    grayDecode(gray_encode(4200));
+    convertToRoman(1994);
+    longestCollatzSequence(100);
+    std::cout << PiMonteCarlo(100000);
+    isValidISBN10("0-306-40615-2");
     return 0;
 }

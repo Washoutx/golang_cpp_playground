@@ -316,20 +316,20 @@ func isValidISBN10(isbn string) bool {
 }
 
 func main() {
-	// fmt.Println(sumOfNumbersDivisibleBy3or5(15))
-	// fmt.Println(gcd_greatestCommonDivisor(48, 12))
-	// fmt.Println(lcm_leastCommonMultiple(48, 12))
-	// fmt.Println(firstPrimeNumberBefore(7))
-	// printPrime6kNumbersUntil(100)
-	// calcAbundantNumbersUntil(200)
-	// printAmicableUntil(1000000)
-	// for i := uint64(0); i < 1000000; i++ {
-	// 	checkIfArmstrongNum(i)
-	// }
-	// printPrimeFactors(420)
-	// gray_decode(gray_encode(4200))
-	// convertToRoman(10)
-	// longestCollatzSequence(100)
-	// fmt.Println(PiMonteCarlo(1000000))
-	// isValidISBN10("0-306-40615-2")
+	fmt.Println(sumOfNumbersDivisibleBy3or5(15))
+	fmt.Println(gcd_greatestCommonDivisor(48, 12))
+	fmt.Println(lcm_leastCommonMultiple(48, 12))
+	fmt.Println(firstPrimeNumberBefore(7))
+	printPrime6kNumbersUntil(100)
+	calcAbundantNumbersUntil(200)
+	printAmicableUntil(1000000)
+	for i := uint64(0); i < 1000000; i++ {
+		checkIfArmstrongNum(i)
+	}
+	printPrimeFactors(420)
+	gray_decode(gray_encode(4200))
+	convertToRoman(10)
+	longestCollatzSequence(100)
+	fmt.Println(PiMonteCarlo(1000000))
+	isValidISBN10("0-306-40615-2")
 }
