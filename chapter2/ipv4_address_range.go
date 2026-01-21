@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/binary"
 	"fmt"
 	"strconv"
 	"strings"
@@ -31,6 +32,22 @@ func ParseIP(s string) (IP_V4, error) {
 	return ip, nil
 }
 
+func (ip IP_V4) to_uint32_t() uint32 {
+	data := binary.BigEndian.Uint32(ip.octets[:])
+	return data
+}
+
+func (ip *IP_V4) Inc() {
+	temp := ip.to_uint32_t()
+	temp++
+	binary.BigEndian.PutUint32(ip.octets[:], temp)
+	fmt.Println(ip.octets)
+}
+
+func (ip IP_V4) CompareLE(other IP_V4) bool {
+	return ip.to_uint32_t() <= other.to_uint32_t()
+}
+
 func main() {
 	var input1, input2 string
 	fmt.Scan(&input1)
@@ -46,5 +63,11 @@ func main() {
 		fmt.Println(ip2)
 	} else {
 		fmt.Print(err)
+	}
+
+	fmt.Println(ip1.CompareLE(ip2))
+	for ip1.CompareLE(ip2) {
+		fmt.Println(ip1)
+		ip1.Inc()
 	}
 }
