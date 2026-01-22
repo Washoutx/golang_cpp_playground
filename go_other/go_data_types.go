@@ -10,7 +10,8 @@ type A struct {
 	a, b int
 }
 
-type AliasInt int
+type AliasInt int // new type
+type AliasInt2 = int // alias
 
 func functionWithError(isError bool) (bool, error) {
 	if isError {
@@ -120,5 +121,14 @@ func main() {
 	fmt.Println(_any)
 
 	pseudo_tuple := []any{1, 1.1, 'a', "test"}
-	fmt.Println(pseudo_tuple...)
+	fmt.Println(pseudo_tuple)
+
+	// multi dimension array
+	d1 := []int{1,2,3}
+	d2 := [][]int{{1, 2, 3}, {3, 2, 1}}
+	d1 = append(d1, 69)
+	fmt.Println(d1)
+	d2[0] = append(d2[0], 1)
+	d2 = append(d2, []int{1,2,3})
+	fmt.Println(d2)
 }
