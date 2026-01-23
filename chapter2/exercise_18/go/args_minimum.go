@@ -47,6 +47,17 @@ func minimumComparator[T any](comp func(a, b T) bool, args ...T) T {
 	return min
 }
 
+// Better performance for big structures
+func minimumComparatorFast[T any](comp func(a, b *T) bool, args ...T) *T {
+	min := &args[0]
+	for i := 1; i < len(args); i++ {
+		if comp(&args[i], min) {
+			min = &args[i]
+		}
+	}
+	return min
+}
+
 func main() {
 	fmt.Println(getArgsMinimum(3, 2, 1, 4))
 	fmt.Println(getArgsMinimumExtra("123", "12", "1"))
@@ -56,5 +67,8 @@ func main() {
 		{a: 10, b: 20, c: 3}, {a: 10, b: 20, c: 2}, {a: 10, b: 20, c: 1},
 	}
 	min := minimumComparator(func(obj1, obj2 MyStruct) bool { return obj1.c < obj2.c }, data...)
+	minFast := minimumComparatorFast(func(obj1, obj2 *MyStruct) bool { return obj1.c < obj2.c }, data...)
+
 	fmt.Println(min)
+	fmt.Println(minFast)
 }
