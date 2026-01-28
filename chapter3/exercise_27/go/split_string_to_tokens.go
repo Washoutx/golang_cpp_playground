@@ -11,7 +11,7 @@ func split_string_to_tokens(text string, separator string) []string {
 	prevPos := 0
 	for idx, ch := range text {
 		if strings.Contains(separator, string(ch)) {
-			// fix conrner case when separators are next to each other
+			// fix corner case when separators are next to each other
 			if prevPos == idx {
 				prevPos++
 				continue
